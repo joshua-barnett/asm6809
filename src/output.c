@@ -1,12 +1,18 @@
 /*
 
-asm6809, a Motorola 6809 cross assembler
-Copyright 2013-2017 Ciaran Anscomb
+File output
 
-This program is free software: you can redistribute it and/or modify it
-under the terms of the GNU General Public License as published by the
-Free Software Foundation, either version 3 of the License, or (at your
-option) any later version.
+Copyright 2013-2017 Ciaran Anscomb
+Copyright 2019 Jeff Tranter
+
+This file is part of asm6809.
+
+asm6809 is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free
+Software Foundation, either version 3 of the License, or (at your option)
+any later version.
+
+See COPYING.GPL for redistribution conditions.
 
 */
 

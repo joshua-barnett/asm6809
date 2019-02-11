@@ -1,12 +1,11 @@
 /*
 
 C array handling
-Copyright 2014-2017, Ciaran Anscomb
 
-This is free software; you can redistribute it and/or modify it under
-the terms of the GNU Lesser General Public License as published by the
-Free Software Foundation; either version 2.1 of the License, or (at your
-option) any later version.
+2014 Ciaran Anscomb
+
+Possibly not fit for any purpose.  You're free to use, copy, modify and
+redistribute so long as I don't get the blame for anything.
 
 Just the one macro for now.
 

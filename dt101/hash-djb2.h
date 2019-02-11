@@ -2,6 +2,8 @@
 
 DJB2 string hash function implementation
 
+By Dan Bernstein
+
 */
 
 #ifndef DT101_HASH_DJB2_H__InoWnIRELNBjE

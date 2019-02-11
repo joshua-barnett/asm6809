@@ -2,6 +2,8 @@
 
 DJB2 string hash function implementation
 
+By Dan Bernstein
+
 */
 
 #include "config.h"
