@@ -187,6 +187,7 @@ static bool dict_foreach_processor(void *e, void *d) {
 /* Iterate over all elements in the dictionary. */
 
 void dict_foreach(struct dict *d, dict_iter_func func, void *data) {
+	assert(d != NULL);
 	struct dict_foreach_data fd = {
 		.func = func,
 		.data = data
