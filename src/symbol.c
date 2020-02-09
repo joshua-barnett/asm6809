@@ -119,8 +119,10 @@ static void add_to_list(const char *key, struct node *value, struct slist **l) {
 }
 
 struct slist *symbol_get_list(void) {
+	if (!symbols)
+		return NULL;
 	struct slist *l = NULL;
-	dict_foreach(symbols, (dict_iter_func)add_to_list, &l);
+		dict_foreach(symbols, (dict_iter_func)add_to_list, &l);
 	return l;
 }
 
