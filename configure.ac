@@ -35,10 +35,7 @@ AC_TYPE_UINT8_T
 
 # Checks for library functions.
 AC_FUNC_ERROR_AT_LINE
-AC_FUNC_MALLOC
-AC_FUNC_REALLOC
-AC_FUNC_STRTOD
-AC_CHECK_FUNCS([memset strerror strndup strtol])
+AC_CHECK_FUNCS([malloc realloc strtod memset strerror strndup strtol])
 
 AC_CONFIG_FILES([Makefile gnulib/Makefile dt101/Makefile src/Makefile man/Makefile tests/Makefile])
 AC_OUTPUT
