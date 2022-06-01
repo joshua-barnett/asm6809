@@ -390,6 +390,60 @@ void assemble_prog(struct prog *prog, unsigned pass) {
 			goto next_line;
 		}
 
+		if (n_line.opcode && 0 == c_strcasecmp("ifge", n_line.opcode->data.as_string)) {
+			listing_add_line(-1, 0, NULL, l->text);
+			if (!cond_excluded) {
+				symbol_ignore_undefined = 1;
+				n_line.args = eval_node(l->args);
+				symbol_ignore_undefined = 0;
+				if (verify_num_args(n_line.args, 1, 1, "IFGE") < 0)
+					goto next_line;
+			}
+			if (!cond_excluded && have_int_required(n_line.args, 0, "IFGE", 0) >= 0) {
+				cond_list = slist_prepend(cond_list, (void *)cond_state_if);
+				cond_excluded = cond_list;
+			} else {
+				cond_list = slist_prepend(cond_list, (void *)cond_state_if_done);
+			}
+			goto next_line;
+		}
+
+		if (n_line.opcode && 0 == c_strcasecmp("ifgt", n_line.opcode->data.as_string)) {
+			listing_add_line(-1, 0, NULL, l->text);
+			if (!cond_excluded) {
+				symbol_ignore_undefined = 1;
+				n_line.args = eval_node(l->args);
+				symbol_ignore_undefined = 0;
+				if (verify_num_args(n_line.args, 1, 1, "IFGT") < 0)
+					goto next_line;
+			}
+			if (!cond_excluded && have_int_required(n_line.args, 0, "IFGT", 0) > 0) {
+				cond_list = slist_prepend(cond_list, (void *)cond_state_if);
+				cond_excluded = cond_list;
+			} else {
+				cond_list = slist_prepend(cond_list, (void *)cond_state_if_done);
+			}
+			goto next_line;
+		}
+
+		if (n_line.opcode && 0 == c_strcasecmp("ifle", n_line.opcode->data.as_string)) {
+			listing_add_line(-1, 0, NULL, l->text);
+			if (!cond_excluded) {
+				symbol_ignore_undefined = 1;
+				n_line.args = eval_node(l->args);
+				symbol_ignore_undefined = 0;
+				if (verify_num_args(n_line.args, 1, 1, "IFLE") < 0)
+					goto next_line;
+			}
+			if (!cond_excluded && have_int_required(n_line.args, 0, "IFLE", 0) <= 0) {
+				cond_list = slist_prepend(cond_list, (void *)cond_state_if);
+				cond_excluded = cond_list;
+			} else {
+				cond_list = slist_prepend(cond_list, (void *)cond_state_if_done);
+			}
+			goto next_line;
+		}
+
 		if (n_line.opcode && 0 == c_strcasecmp("elsif", n_line.opcode->data.as_string)) {
 			listing_add_line(-1, 0, NULL, l->text);
 			if (!cond_list) {
