@@ -1,18 +1,18 @@
 /* Sequential list data type implemented by a binary tree.
-   Copyright (C) 2006, 2009-2018 Free Software Foundation, Inc.
+   Copyright (C) 2006, 2009-2023 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2006.
 
-   This program is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation; either version 3 of the License, or
-   (at your option) any later version.
+   This file is free software: you can redistribute it and/or modify
+   it under the terms of the GNU Lesser General Public License as
+   published by the Free Software Foundation; either version 2.1 of the
+   License, or (at your option) any later version.
 
-   This program is distributed in the hope that it will be useful,
+   This file is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
+   GNU Lesser General Public License for more details.
 
-   You should have received a copy of the GNU General Public License
+   You should have received a copy of the GNU Lesser General Public License
    along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
 /* Common code of gl_avltree_list.c and gl_avltreehash_list.c.  */
@@ -62,9 +62,9 @@ struct gl_list_impl
   struct gl_list_node_impl *root;   /* root node or NULL */
 };
 
-/* An AVL tree of height h has at least F_(h+2) [Fibonacci number] and at most
-   2^h - 1 elements.  So, h <= 84 (because a tree of height h >= 85 would have
-   at least F_87 elements, and because even on 64-bit machines,
-     sizeof (gl_list_node_impl) * F_87 > 2^64
+/* An AVL tree of height h has at least F_(h+2) - 1 [Fibonacci number] and at
+   most 2^h - 1 elements.  So, h <= 84 (because a tree of height h >= 85 would
+   have at least F_87 - 1 elements, and because even on 64-bit machines,
+     sizeof (gl_list_node_impl) * (F_87 - 1) > 2^64
    this would exceed the address space of the machine.  */
 #define MAXHEIGHT 83

@@ -1,27 +1,27 @@
 /* Sequential list data type implemented by a binary tree.
-   Copyright (C) 2006-2007, 2009-2018 Free Software Foundation, Inc.
+   Copyright (C) 2006-2007, 2009-2023 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2006.
 
-   This program is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation; either version 3 of the License, or
-   (at your option) any later version.
+   This file is free software: you can redistribute it and/or modify
+   it under the terms of the GNU Lesser General Public License as
+   published by the Free Software Foundation; either version 2.1 of the
+   License, or (at your option) any later version.
 
-   This program is distributed in the hope that it will be useful,
+   This file is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
+   GNU Lesser General Public License for more details.
 
-   You should have received a copy of the GNU General Public License
+   You should have received a copy of the GNU Lesser General Public License
    along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
 /* Common code of gl_avltree_list.c and gl_avltreehash_list.c.  */
 
 /* -------------------------- gl_list_t Data Type -------------------------- */
 
-/* Create a subtree for count >= 1 elements.
+/* Creates a subtree for count >= 1 elements.
    Its height is h where 2^(h-1) <= count <= 2^h - 1.
-   Return NULL upon out-of-memory.  */
+   Returns NULL upon out-of-memory.  */
 static gl_list_node_t
 create_subtree_with_contents (size_t count, const void **contents)
 {
@@ -138,7 +138,7 @@ gl_tree_nx_create (gl_list_implementation_t implementation,
   return NULL;
 }
 
-/* Ensure the tree is balanced, after an insertion or deletion operation.
+/* Ensures the tree is balanced, after an insertion or deletion operation.
    The height of NODE is incremented by HEIGHT_DIFF (1 or -1).
    PARENT = NODE->parent.  (NODE can also be NULL.  But PARENT is non-NULL.)
    Rotation operations are performed starting at PARENT (not NODE itself!).  */

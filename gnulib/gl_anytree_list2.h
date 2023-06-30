@@ -1,18 +1,18 @@
 /* Sequential list data type implemented by a binary tree.
-   Copyright (C) 2006-2018 Free Software Foundation, Inc.
+   Copyright (C) 2006-2023 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2006.
 
-   This program is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation; either version 3 of the License, or
-   (at your option) any later version.
+   This file is free software: you can redistribute it and/or modify
+   it under the terms of the GNU Lesser General Public License as
+   published by the Free Software Foundation; either version 2.1 of the
+   License, or (at your option) any later version.
 
-   This program is distributed in the hope that it will be useful,
+   This file is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
+   GNU Lesser General Public License for more details.
 
-   You should have received a copy of the GNU General Public License
+   You should have received a copy of the GNU Lesser General Public License
    along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
 /* Common code of gl_avltree_list.c, gl_rbtree_list.c,
@@ -53,20 +53,22 @@ gl_tree_nx_create_empty (gl_list_implementation_t implementation,
 #endif
 }
 
-static size_t
+static size_t _GL_ATTRIBUTE_PURE
 gl_tree_size (gl_list_t list)
 {
   return (list->root != NULL ? list->root->branch_size : 0);
 }
 
-static const void *
-gl_tree_node_value (gl_list_t list, gl_list_node_t node)
+static const void * _GL_ATTRIBUTE_PURE
+gl_tree_node_value (_GL_ATTRIBUTE_MAYBE_UNUSED gl_list_t list,
+                    gl_list_node_t node)
 {
   return node->value;
 }
 
 static int
-gl_tree_node_nx_set_value (gl_list_t list, gl_list_node_t node, const void *elt)
+gl_tree_node_nx_set_value (_GL_ATTRIBUTE_MAYBE_UNUSED gl_list_t list,
+                           gl_list_node_t node, const void *elt)
 {
 #if WITH_HASHTABLE
   if (elt != node->value)
@@ -101,7 +103,8 @@ gl_tree_node_nx_set_value (gl_list_t list, gl_list_node_t node, const void *elt)
 }
 
 static gl_list_node_t _GL_ATTRIBUTE_PURE
-gl_tree_next_node (gl_list_t list, gl_list_node_t node)
+gl_tree_next_node (_GL_ATTRIBUTE_MAYBE_UNUSED gl_list_t list,
+                   gl_list_node_t node)
 {
   if (node->right != NULL)
     {
@@ -119,7 +122,8 @@ gl_tree_next_node (gl_list_t list, gl_list_node_t node)
 }
 
 static gl_list_node_t _GL_ATTRIBUTE_PURE
-gl_tree_previous_node (gl_list_t list, gl_list_node_t node)
+gl_tree_previous_node (_GL_ATTRIBUTE_MAYBE_UNUSED gl_list_t list,
+                       gl_list_node_t node)
 {
   if (node->left != NULL)
     {
@@ -136,7 +140,33 @@ gl_tree_previous_node (gl_list_t list, gl_list_node_t node)
   return node;
 }
 
-/* Return the node at the given position < gl_tree_size (list).  */
+static gl_list_node_t _GL_ATTRIBUTE_PURE
+gl_tree_first_node (_GL_ATTRIBUTE_MAYBE_UNUSED gl_list_t list)
+{
+  gl_list_node_t node = list->root;
+
+  if (node != NULL)
+    {
+      while (node->left != NULL)
+        node = node->left;
+    }
+  return node;
+}
+
+static gl_list_node_t _GL_ATTRIBUTE_PURE
+gl_tree_last_node (_GL_ATTRIBUTE_MAYBE_UNUSED gl_list_t list)
+{
+  gl_list_node_t node = list->root;
+
+  if (node != NULL)
+    {
+      while (node->right != NULL)
+        node = node->right;
+    }
+  return node;
+}
+
+/* Returns the node at the given position < gl_tree_size (list).  */
 static gl_list_node_t _GL_ATTRIBUTE_PURE
 node_at (gl_list_node_t root, size_t position)
 {
@@ -217,7 +247,7 @@ gl_tree_nx_set_at (gl_list_t list, size_t position, const void *elt)
 
 #if !WITH_HASHTABLE
 
-static gl_list_node_t
+static gl_list_node_t _GL_ATTRIBUTE_PURE
 gl_tree_search_from_to (gl_list_t list, size_t start_index, size_t end_index,
                         const void *elt)
 {
@@ -328,7 +358,7 @@ gl_tree_search_from_to (gl_list_t list, size_t start_index, size_t end_index,
   }
 }
 
-static size_t
+static size_t _GL_ATTRIBUTE_PURE
 gl_tree_indexof_from_to (gl_list_t list, size_t start_index, size_t end_index,
                          const void *elt)
 {
@@ -548,7 +578,7 @@ gl_tree_list_free (gl_list_t list)
 
 /* --------------------- gl_list_iterator_t Data Type --------------------- */
 
-static gl_list_iterator_t
+static gl_list_iterator_t _GL_ATTRIBUTE_PURE
 gl_tree_iterator (gl_list_t list)
 {
   gl_list_iterator_t result;
@@ -573,7 +603,7 @@ gl_tree_iterator (gl_list_t list)
   return result;
 }
 
-static gl_list_iterator_t
+static gl_list_iterator_t _GL_ATTRIBUTE_PURE
 gl_tree_iterator_from_to (gl_list_t list, size_t start_index, size_t end_index)
 {
   size_t count = (list->root != NULL ? list->root->branch_size : 0);
@@ -628,13 +658,13 @@ gl_tree_iterator_next (gl_list_iterator_t *iterator,
 }
 
 static void
-gl_tree_iterator_free (gl_list_iterator_t *iterator)
+gl_tree_iterator_free (_GL_ATTRIBUTE_MAYBE_UNUSED gl_list_iterator_t *iterator)
 {
 }
 
 /* ---------------------- Sorted gl_list_t Data Type ---------------------- */
 
-static gl_list_node_t
+static gl_list_node_t _GL_ATTRIBUTE_PURE
 gl_tree_sortedlist_search (gl_list_t list, gl_listelement_compar_fn compar,
                            const void *elt)
 {
@@ -675,7 +705,7 @@ gl_tree_sortedlist_search (gl_list_t list, gl_listelement_compar_fn compar,
   return NULL;
 }
 
-static gl_list_node_t
+static gl_list_node_t _GL_ATTRIBUTE_PURE
 gl_tree_sortedlist_search_from_to (gl_list_t list,
                                    gl_listelement_compar_fn compar,
                                    size_t low, size_t high,
@@ -757,7 +787,7 @@ gl_tree_sortedlist_search_from_to (gl_list_t list,
   return NULL;
 }
 
-static size_t
+static size_t _GL_ATTRIBUTE_PURE
 gl_tree_sortedlist_indexof (gl_list_t list, gl_listelement_compar_fn compar,
                             const void *elt)
 {
@@ -812,7 +842,7 @@ gl_tree_sortedlist_indexof (gl_list_t list, gl_listelement_compar_fn compar,
   return (size_t)(-1);
 }
 
-static size_t
+static size_t _GL_ATTRIBUTE_PURE
 gl_tree_sortedlist_indexof_from_to (gl_list_t list,
                                     gl_listelement_compar_fn compar,
                                     size_t low, size_t high,
