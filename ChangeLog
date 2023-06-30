@@ -1,5 +1,8 @@
 ## asm6809 changes
 
+  * Fix crash when exporting empty symbol table.
+  * Accept immediate value as argument to stack ops.
+
 ### Changes in version 2.12, Sun 10 Feb 2019
 
   * Fix occasional 16-bit PCR where 8-bit would do in indexed addressing.
