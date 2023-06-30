@@ -1,3 +1,7 @@
+%top {
+#include "config.h"
+}
+
 %{
 /*
 
@@ -15,8 +19,6 @@ any later version.
 See COPYING.GPL for redistribution conditions.
 
 */
-
-#include "config.h"
 
 #include <stdio.h>
 #include <string.h>
