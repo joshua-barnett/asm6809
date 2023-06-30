@@ -2,7 +2,7 @@
 
 Instruction assembly
 
-Copyright 2013-2018 Ciaran Anscomb
+Copyright 2013-2023 Ciaran Anscomb
 
 This file is part of asm6809.
 
@@ -506,6 +506,14 @@ void instr_stack(struct opcode const *op, struct node const *args, enum reg_id s
 
 	int pbyte = 0;
 	for (int i = 0; i < nargs; i++) {
+		if (node_attr_of(arga[i]) == node_attr_immediate) {
+			struct node *tmp = eval_int(arga[i]);
+			if (tmp) {
+				pbyte |= tmp->data.as_int;
+				node_free(tmp);
+			}
+			continue;
+		}
 		if (node_type_of(arga[i]) != node_type_reg) {
 			error(error_type_syntax, "invalid argument");
 			return;
