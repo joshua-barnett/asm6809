@@ -96,7 +96,7 @@ USAGE
          inclusion in subsequent source files, but beware multiple definitions
          errors if two source files include a common set of symbols.
 
-       Home page: <http://www.6809.org.uk/asm6809/>
+       Home page: <https://www.6809.org.uk/asm6809/>
 
    Differences to other assemblers
        Motorola syntax allows a comment to follow any operands, separated from
@@ -551,4 +551,4 @@ LICENCE
 
 
 
-asm6809-2.12                     February 2019                      asm6809(1)
+asm6809-2.13                       June 2023                        asm6809(1)

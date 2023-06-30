@@ -75,10 +75,10 @@
 .nr PDFOUTLINE.FOLDLEVEL 3
 .\"
 .pdfview /PageMode /UseOutlines
-.pdfinfo /Title asm6809 2.12
+.pdfinfo /Title asm6809 2.13
 .pdfinfo /Author Ciaran Anscomb
 .
-.TH "asm6809" "1" "February 2019" "asm6809-2.12"
+.TH "asm6809" "1" "June 2023" "asm6809-2.13"
 .hy 0
 .nh
 .H1 NAME
@@ -165,7 +165,7 @@ An exports file contains a list of all macro definitions and symbols flagged for
 A symbols file contains a list of \fIall\fR non-local symbols. Suitable for inclusion in subsequent source files, but beware multiple definitions errors if two source files include a common set of symbols.
 .PP
 Home page: 
-.UU "<" "http://www.6809.org.uk/asm6809/" ">"
+.UU "<" "https://www.6809.org.uk/asm6809/" ">"
 .H2 Differences to other assemblers
 .PP
 Motorola syntax allows a comment to follow any operands, separated from them only by whitespace. To an extent, this assembler accepts that, but be aware that as spaces are allowed within expressions, if the comment looks like it is continuing an expression it will generate bad code (or raise an error if the result is syntactically incorrect). Example:
