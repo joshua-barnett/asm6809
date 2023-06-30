@@ -2,7 +2,7 @@
 
 Dictionaries
 
-Copyright 2014 Ciaran Anscomb
+Copyright 2014-2023 Ciaran Anscomb
 
 This program is free software: you can redistribute it and/or modify it
 under the terms of the GNU General Public License as published by the
@@ -153,7 +153,7 @@ bool dict_remove(struct dict *d, const void *k) {
 		.key = (void *)k,
 		.dict = d
 	};
-	struct dict_ent *ent = hash_delete(d->ht, &q);
+	struct dict_ent *ent = hash_remove(d->ht, &q);
 	if (!ent)
 		return false;
 	dict_ent_free(ent);
@@ -168,7 +168,7 @@ bool dict_steal(struct dict *d, const void *k) {
 		.key = (void *)k,
 		.dict = d
 	};
-	struct dict_ent *ent = hash_delete(d->ht, &q);
+	struct dict_ent *ent = hash_remove(d->ht, &q);
 	if (!ent)
 		return false;
 	free(ent);

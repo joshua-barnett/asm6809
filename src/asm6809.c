@@ -2,7 +2,7 @@
 
 main() function
 
-Copyright 2013-2021 Ciaran Anscomb
+Copyright 2013-2023 Ciaran Anscomb
 
 This file is part of asm6809.
 
@@ -196,7 +196,7 @@ int main(int argc, char **argv) {
 	}
 
 	/* Attempt to assemble files until consistent */
-	for (unsigned pass = 0; pass < max_passes; pass++) {
+	for (int pass = 0; pass < max_passes; pass++) {
 		error_clear_all();
 		listing_free_all();
 		section_set("CODE", pass);

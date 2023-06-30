@@ -596,7 +596,7 @@ void instr_tfm(struct opcode const *op, struct node const *args) {
 		return;
 	}
 
-	int nibble[2];
+	int nibble[2] = { 0, 0 };
 	int type[2];
 	int attr[2];
 	for (int i = 0; i < 2; i++) {

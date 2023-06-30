@@ -2,7 +2,7 @@
 
 Sections
 
-Copyright 2013-2014 Ciaran Anscomb
+Copyright 2013-2023 Ciaran Anscomb
 
 This file is part of asm6809.
 
@@ -54,7 +54,8 @@ static struct section_span *section_span_new(void) {
 	return new;
 }
 
-static struct section_span *section_span_ref(struct section_span *span) {
+static struct section_span *section_span_ref(struct section_span *span, void *copy_data) {
+	(void)copy_data;
 	if (!span)
 		return NULL;
 	span->ref++;
