@@ -119,6 +119,7 @@ idlist	: idpart		{ $$ = slist_append(NULL, $1); }
 	;
 
 idpart	: ID			{ $$ = node_new_string($1); }
+		| INTEGER '$'   { $$ = node_new_int($1); }
       	| INTERP		{ $$ = node_new_interp($1); }
 	;
 

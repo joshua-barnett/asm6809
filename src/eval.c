@@ -45,6 +45,8 @@ static struct node *eval_node_oper_3(struct node *n);
  * for which a new array is returned with each element evaluated according to
  * the same rules. */
 
+extern char last_major_label[512];
+
 struct node *eval_node(struct node *n) {
 	struct node *tmp1;
 
@@ -88,7 +90,16 @@ struct node *eval_node(struct node *n) {
 				return node_set_attr_if(eval_node(arg), attr);
 		}
 		if ((tmp1 = eval_string(n))) {
-			struct node *tmp2 = symbol_get(tmp1->data.as_string);
+			struct node *tmp2;
+			/* TZY - Accept these new local labels.  */
+			size_t len = strlen(tmp1->data.as_string);
+			if(len >= 1 && isdigit(tmp1->data.as_string[0])) {
+				static char tmp[1024];
+				sprintf(tmp, "%s.%s", last_major_label, tmp1->data.as_string);
+				tmp2 = symbol_get(tmp);
+			} else {
+				tmp2 = symbol_get(tmp1->data.as_string);
+			}
 			node_free(tmp1);
 			tmp1 = eval_node(tmp2);
 			node_free(tmp2);

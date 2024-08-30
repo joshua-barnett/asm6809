@@ -18,10 +18,13 @@ See COPYING.GPL for redistribution conditions.
 #include "config.h"
 
 #include <assert.h>
+#include <errno.h>
 #include <stdarg.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
 
 #include "array.h"
 #include "c-strcase.h"
@@ -47,6 +50,9 @@ static int defining_macro_level = 0;
 
 static unsigned asm_pass;
 static unsigned prog_depth = 0;
+
+/* Stores the last major label name, or empty string. */
+char last_major_label[512] = { 0, };
 
 enum cond_state {
 	cond_state_if,
@@ -509,6 +515,15 @@ void assemble_prog(struct prog *prog, unsigned pass) {
 		n_line.label = eval_int(l->label);
 		if (!n_line.label)
 			n_line.label = eval_string(l->label);
+		
+		/* TZY - Save the last major label, which is anything not local. */
+		if(n_line.label && node_type_of(n_line.label) == node_type_string) {
+			const char *text = n_line.label->data.as_string;
+			int l = strlen(text);
+			if(!(l >= 1 && isdigit(text[0]))) {
+				strcpy(last_major_label, text);
+			}
+		}
 
 		/* EXPORT only needs symbol names, not their values */
 		if (n_line.opcode && 0 == c_strcasecmp("export", n_line.opcode->data.as_string)) {
@@ -629,6 +644,8 @@ next_line:
 		error(error_type_syntax, "IF not matched with ENDIF");
 	}
 
+	/* TZY - Clear major label so that the next pass starts clean. */
+	memset(last_major_label, 0, sizeof(last_major_label));
 	assert(prog_depth > 0);
 	prog_depth--;
 	prog_ctx_free(ctx);
@@ -650,7 +667,15 @@ static void set_label(struct node *label, struct node *value, _Bool changeable) 
 		symbol_local_set(cur_section->local_labels, label->data.as_int, cur_section->line_number, value, asm_pass);
 		break;
 	case node_type_string:
-		symbol_set(label->data.as_string, value, changeable, asm_pass);
+		/* TZY - Make local labels sublabels under the last major label. */
+		size_t len = strlen(label->data.as_string);
+		if(len >= 1 && isdigit(label->data.as_string[0])) {
+			static char tmp[1024];
+			sprintf(tmp, "%s.%s", last_major_label, label->data.as_string);
+			symbol_set(tmp, value, changeable, asm_pass);
+		} else {
+			symbol_set(label->data.as_string, value, changeable, asm_pass);
+		}
 		break;
 	}
 	node_free(value);
